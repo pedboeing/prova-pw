@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Página com API do IBGE</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<div class="container">
+			<header class="header">
+				<h1>Portal de Notícias do IBGE</h1>
+				<form class="search-bar">
+					<input type="text" id="search-input" placeholder="Pesquise aqui..." />
+					<button type="submit" id="search-button">🔍</button>
+				</form>
+
+				<div class="filter-icon" id="filter-icon">
+					<svg
+						width="20"
+						height="20"
+						fill="#f0f0f0"
+						viewBox="0 0 80 90"
+						focusable="false"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path d="m 0,0 30,45 0,30 10,15 0,-45 30,-45 Z"></path>
+					</svg>
+					<span class="filter-count" id="filter-count"></span>
+				</div>
+
+				<dialog id="filter-dialog">
+					<form id="filter-form">
+						<div class="modal-header">
+							<h2>Filtros</h2>
+							<button id="close-filters" type="button">✖</button>
+						</div>
+						<label for="busca">Busca:</label>
+						<input type="text" id="busca" name="busca" />
+
+						<label for="tipo">Tipo:</label>
+						<select id="tipo" name="tipo">
+							<option value="">Selecione...</option>
+							<option value="noticias">Noticia</option>
+							<option value="release">Release</option>
+						</select>
+
+						<label for="qtd">Quantidade:</label>
+						<select id="qtd" name="qtd">
+							<option value="10">10</option>
+							<option value="15">15</option>
+							<option value="20">20</option>
+							<option value="25">25</option>
+							<option value="30">30</option>
+						</select>
+
+						<label for="de">De:</label>
+						<input type="date" id="de" name="de" />
+
+						<label for="ate">Até:</label>
+						<input type="date" id="ate" name="ate" />
+
+						<menu>
+							<button id="apply-filters" type="submit">Aplicar</button>
+						</menu>
+					</form>
+				</dialog>
+			</header>
+			<main class="main">
+				<section class="content">
+					<ul class="news-container">
+						<!-- Aqui serão inseridas as notícias -->
+                    </ul>
+				</section>
+			</main>
+			<footer class="footer">
+				<p>© Prova do segundo bimestre - Programação WEB</p>
+			</footer>
+		</div>
+		<script src="script.js"></script>
+	</body>
+</html>
