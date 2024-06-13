@@ -11,15 +11,16 @@ function iniciar(){
         "de": document.getElementById("de").value,
         "ate": document.getElementById("ate").value
     };
-	carregarFiltro()
-	buscaDados(filtros)
-}
 
+	carregarFiltro()
+	buscaFiltro(filtros)
+}
 
 function carregarFiltro(){
     const filterDialog = document.getElementById("filter-dialog");
 	const filterIcon = document.getElementById("filter-icon");
     const closeDialog = document.getElementById("close-filters");
+    const search = document.getElementById("search-button")
 
 	filterIcon.addEventListener("click", function() {
         filterDialog.showModal()
@@ -34,6 +35,10 @@ function carregarFiltro(){
 		aplicaFiltro();
 		filterDialog.close();
 	});
+
+    search.addEventListener("click", function(){
+        buscaNoticia();
+    });
 }
 
 
@@ -53,18 +58,22 @@ function aplicaFiltro() {
     const newUrl = `${window.location.pathname}?${queryString}`;
     window.history.pushState({}, "", newUrl);
 
-    buscaDados(filtros);
+    buscaFiltro(filtros);
     atualizaContador(filtros);
 }
 
 
-function buscaDados(filtros) {
+function buscaFiltro(filtros) {
     const apiUrl = "https://servicodados.ibge.gov.br/api/v3/noticias/";
     const url = new URL(apiUrl);
     const params = new URLSearchParams();
 	const newsContainer = document.querySelector(".news-container");
 
+    params.set("busca", filtros.busca);
     params.set("qtd", filtros.qtd);
+    params.set("tipo", filtros.tipo);
+    params.set("de", filtros.de);
+    params.set("ate", filtros.ate);
 
     url.search = params.toString();
 	console.log(url)
@@ -89,13 +98,19 @@ function buscaDados(filtros) {
             const images = JSON.parse(news.imagens);
             const imageIntro = images.image_intro;
 
-            const newsItem = document.createElement("div");
+            const newsItem = document.createElement("li");
             newsItem.classList.add("news-item");
             newsItem.innerHTML = `
-                <h3>${news.titulo}</h3>
-                <p>${news.introducao}</p>
+            <div class = "box-noticia">
                 <img src= https://agenciadenoticias.ibge.gov.br/${imageIntro} alt="Imagem da notícia">
-                <a href="${news.link}" target="_blank">Leia mais</a>
+                <div class = "box-noticia-content">
+                    <h3>${news.titulo}</h3>
+                    <p>${news.introducao}</p>
+                    <p>#${news.editorias}</p>
+                    <a href="${news.link}" target="_blank">Leia mais</a>
+                </div>
+            </div>
+            <hr />
             `;
             newsContainer.appendChild(newsItem);
         });
@@ -103,6 +118,10 @@ function buscaDados(filtros) {
 	.catch(error => {
         console.error("Erro ao buscar as notícias:", error);
     });
+}
+
+function buscaNoticia(){
+    console.log("asd")
 }
 
 function atualizaContador(queryParams) {

@@ -11,7 +11,7 @@
 			<header class="header">
 				<h1>Portal de Notícias do IBGE</h1>
 				<form class="search-bar">
-					<input type="text" id="search-input" placeholder="Pesquise aqui..." />
+					<input type="text" id="search-input" placeholder="Buscar notícia por termo" />
 					<button type="submit" id="search-button">🔍</button>
 				</form>
 
@@ -32,7 +32,6 @@
 				<dialog id="filter-dialog">
 					<form id="filter-form">
 						<div class="modal-header">
-							<h2>Filtros</h2>
 							<button id="close-filters" type="button">✖</button>
 						</div>
 						<label for="busca">Busca:</label>
@@ -40,7 +39,6 @@
 
 						<label for="tipo">Tipo:</label>
 						<select id="tipo" name="tipo">
-							<option value="">Selecione...</option>
 							<option value="noticias">Noticia</option>
 							<option value="release">Release</option>
 						</select>
@@ -68,9 +66,9 @@
 			</header>
 			<main class="main">
 				<section class="content">
-					<ul class="news-container">
+					<div class="news-container">
 						<!-- Aqui serão inseridas as notícias -->
-                    </ul>
+                    </div>
 				</section>
 			</main>
 			<footer class="footer">
@@ -80,3 +78,4 @@
 		<script src="script.js"></script>
 	</body>
 </html>
+

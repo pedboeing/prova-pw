@@ -67,7 +67,6 @@ html {
     margin-left: 0.5em;
     font-size: 0.8em;
     display: none;
-    /* Oculto inicialmente */
 }
 
 .main {
@@ -91,22 +90,20 @@ p {
     margin: 1em 0;
 }
 
+img {
+    height: 100%;
+    width: 300px;
+}
+
 dialog {
-    border: none;
-    border-radius: 8px;
+    margin: auto;
+    position: relative;
+    width: 50vw;
+    max-width: 600px;
+    padding: 20px;
+    border-radius: 5px;
+    border-width: 1px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 1em;
-    max-width: 400px;
-}
-
-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
 li {
@@ -116,11 +113,22 @@ li {
 #close-filters {
     background: none;
     border: none;
-    font-size: 1.5em;
+    font-size: 1em;
     cursor: pointer;
+    position: relative;
+    left: 50%;
 }
 
 menu {
     display: flex;
     justify-content: flex-end;
+}
+
+.news-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.box-noticia{
+    display: flex;
 }
