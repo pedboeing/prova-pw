@@ -159,53 +159,65 @@ function formatImage(image){
 function formatPublishedDate(dataHora){
     const dayMs = 86400000;
 
-    const [d, m, y] = dataHora.slice(0, 10).split("/");
-    const date = new Date(`${y}-${m}-${d}T00:00:00-03:00`)
+    const date = new Date(dataHora);
 
-    const today = new Date()
-    today.setHours(0,0,0,0);
+    if (isNaN(date.getTime())) {
+        console.error("Data inválida: ", dataHora);
+        return "Data inválida";
+    }
 
-    if (today.getTime() === date.getTime()) return `Publicado hoje`
-    else if ((today.getTime() - date.getTime()) === dayMs) return `Publicado ontem`
-    else return `Publicado ${(today.getTime() - date.getTime()) / dayMs} dias atrás`
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
+    const diffTime = today.getTime() - date.getTime();
+    const diffDays = Math.floor(diffTime / dayMs);
+
+    if (diffDays === 0) return `Publicado hoje`;
+    else if (diffDays === 1) return `Publicado ontem`;
+    else return `Publicado ${diffDays} dias atrás`;
 }
 
 function submitForm(e){
     e.preventDefault();
 
-    const input = document.querySelector('#search-bar')
-    if (input.value === "") return
-
+    const input = document.querySelector('#search-bar');
     const params = new URLSearchParams(location.search);
-    params.set('busca', input.value)
-    history.replaceState({}, "", `${location.pathname}?${params}`)
 
-    buscaNoticia(params);
+    if (input.value === "") {
+        params.delete('busca'); 
+        iniciaPadrao(params); 
+    } else {
+        
+        params.set('busca', input.value);
+        params.set('page', 1); 
+    }
+
+    history.replaceState({}, "", `${location.pathname}?${params}`);
+    buscaNoticia();
 }
 
-function applyFilters(e){
-    e.preventDefault()
+
+function applyFilters(e) {
+    e.preventDefault();
     const params = new URLSearchParams(location.search);
-    params.set('page', 1);
+    params.set('page', 1); 
 
     const filters = ['tipo', 'qtd', 'de', 'ate'];
 
-    filters.map((item) => {
+    filters.forEach((item) => {
         const itemHTML = document.querySelector(`#${item}`);
         
-        if (itemHTML.value !== ""){
-            params.set(`${item}`, itemHTML.value);
-        }else if (itemHTML.value === "" && !params.has(`${item}`)){
-            params.delete(`${item}`)
+        if (itemHTML.value !== "") {
+            params.set(item, itemHTML.value);
+        } else {
+            params.delete(item); 
         }
+    });
 
-    })
-
-    history.replaceState({}, "", `${location.pathname}?${params}`)
+    history.replaceState({}, "", `${location.pathname}?${params}`);
     iniciaFiltro(params);
     
-    closeFilter()
+    closeFilter();
     buscaNoticia();
 }
 
